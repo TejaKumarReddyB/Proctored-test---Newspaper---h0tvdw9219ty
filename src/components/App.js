@@ -7,7 +7,7 @@ const App = () => {
   const [news, setNews] = useState([]);
   
   const fetchNews = () => {
-    axios.get("https://gnews.io/")
+    axios.get("https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={f1a6a9f4b1cca85753aa1d87e71cba3a}")
     .then((response) => {
       console.log(response);
       setNews(response.data.articles)
