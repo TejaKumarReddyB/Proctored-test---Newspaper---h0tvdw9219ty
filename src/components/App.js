@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import "../styles/App.css";
-import Weather from "./Weather";
+
 
 const weatherComponent = () => {
   const [lat, setLat] = useState([]);
