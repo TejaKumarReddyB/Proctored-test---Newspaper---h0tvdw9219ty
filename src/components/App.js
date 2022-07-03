@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import "../styles/App.css";
 import Weather from "./Weather";
 
-const App = () => {
+const weatherComponent = () => {
   const [lat, setLat] = useState([]);
   const [lng, setLng] = useState([]);
   const [data, setData] = useState([]);
@@ -39,7 +39,7 @@ const App = () => {
     <><h1>
       React Project
     </h1>
-    <Weathercomponent />
+    <weatherComponent />
     </>
   )
 }
