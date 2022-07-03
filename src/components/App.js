@@ -1,51 +1,37 @@
-import React, {Component, useState} from "react";
-import axios from 'axios';
-import '../styles/App.css';
+import React, { Component, useEffect, useState } from "react";
+import "../styles/App.css";
+import Weather from "./Weather";
 
 const App = () => {
-  
-  const [news, setNews] = useState([]);
-  
-  const fetchNews = () => {
-    axios.get("https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={f1a6a9f4b1cca85753aa1d87e71cba3a}")
-    .then((response) => {
-      console.log(response);
-      setNews(response.data.articles)
-    })
-  }
+  const [lat, setLat] = useState([]);
+  const [lng, setLng] = useState([]);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        setLat(pos.coords.latitude);
+        setLng(pos.coords.longitude);
+      });
+
+      await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=f1a6a9f4b1cca85753aa1d87e71cba3a`
+      )
+        .then((res) => res.json())
+        .then((result) => {
+          setData(result);
+          console.log(result);
+        });
+    };
+    fetchData();
+  }, [lat, lng]);
+
   return (
     <>
-    <div className="container my-3">
-       <div className="row">
-          <div className="col-4">
-            <button className="btn btn-primary" data-testid='lang-en' onClick={fetchNews}>fetchNews</button>
-          </div>
-       </div>
-    </div>
-
-      <div className="container">
-        <div className="row">
-          {
-          news.map((value, index) => {
-            return(
-              <div key={index} className="col-4">
-                <div className="card" style={{width: "18rem" }}>
-                  <img src={value.urlToImage} className="card-img-top" alt="..." />
-                    <div className="card-body">
-                      <h4 className="card-title">{value.title}</h4>
-                      <p className="card-text">{value.description}</p>
-                      <a href="#" className="btn btn-primary">Main</a>
-                    </div>
-              </div>
-            </div>
-          );
-        })
-      }
-      </div>
-      </div>
+      Weather and News
+      {typeof data.main != "undefined" ? <Weather data={data} /> : <div></div>}
     </>
-  )
-}
-
+  );
+};
 
 export default App;
