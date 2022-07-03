@@ -34,4 +34,15 @@ const App = () => {
   );
 };
 
+const App = () => {
+  return (
+    <><h1>
+      React Project
+    </h1>
+    <Weathercomponent />
+    </>
+  )
+}
+
+
 export default App;
